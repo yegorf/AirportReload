@@ -9,6 +9,7 @@ using namespace std;
 #include "Airport.h"
 #include "Directory.h"
 #include "Timetable.h"
+#include "Checker.h"
 
 int main()
 {
@@ -16,6 +17,7 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
+	Checker C;
 	Timetable *table;
 	Directory *dir;
 	char cc;
@@ -27,7 +29,7 @@ int main()
 	string t = ".txt";
 	string tt = "timetables\\";
 	string ttt = "registrations\\";
-	bool check;
+	bool check = false;
 
 
 	do {
@@ -44,8 +46,13 @@ int main()
 		case '1':
 			do {
 			system("cls");
-			cout << "¬ведите дату: ";
-			cin >> date;
+
+			do {
+				cout << "¬ведите дату: ";
+				cin >> date;
+				check = C.CheckDate(date);
+			} while (check == false);
+
 			datee = tt + date + t;
 			table = new Timetable(datee);
 			check = table->Init();
@@ -93,14 +100,19 @@ int main()
 		case '2':
 			system("cls");
 			cout << "¬ведите дату рейса: ";
-			cin >> date;
+			do {
+				cin >> date;
+				check = C.CheckDate(date);
+			}while(check==false);
 			datee = tt + date + t;
 			table = new Timetable(datee);
 			table->Init();
 			table->PrintTimetable();
-
-			cout << "¬ведите номер рейса:" << endl;
-			cin >> a;
+			do {
+				cout << "¬ведите номер рейса:" << endl;
+				cin >> a;
+				check = C.CheckNum(a);
+			} while (check == false);
 			datee = ttt + date + "-" + a + ".txt";  
 			cout << endl << datee << endl;
 			num = table->FindVoy(a);

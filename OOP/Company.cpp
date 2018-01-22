@@ -1,6 +1,7 @@
 #include <fstream>
 #include "Company.h"
 #include <iomanip>
+#include "Checker.h"
 
 void Company::SetFileCom()
 {
@@ -64,14 +65,22 @@ void Company::PrintPlanes()
 
 void Company::AddPlane()
 {
+	bool check;
+	Checker C;
 	string n, y, m;
 	cout << "Введите данные" << endl;
-	cout << "Номер: ";
-	cin >> n;
+	do {
+		cout << "Номер: ";
+		cin >> n;
+		check = C.CheckNum(n);
+	} while (check == false);
 	cout << "Модель: ";
 	cin >> m;
-	cout << "Год выпуска: ";
-	cin >> y;
+	do {
+		cout << "Дата выпуска: ";
+		cin >> y;
+		check = C.CheckDate(y);
+	} while (check == false);
 
 	Plane dop(n, m, y);
 	Plane *mas = new Plane[col + 1];

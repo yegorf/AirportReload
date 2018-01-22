@@ -1,6 +1,7 @@
 #include "Voyage.h"
 #include <fstream>
 #include <iomanip>
+#include "Checker.h"
 
 Voyage::Voyage()
 {
@@ -46,7 +47,7 @@ int Voyage::FileCol(string file)
 
 	f.close();
 	delete str;
-	return j;
+	return j-1;
 }
 
 void Voyage::FilePas(string file)
@@ -86,13 +87,18 @@ void Voyage::PrintPas()
 
 void Voyage::AddPas()
 {
+	Checker c;
+	bool check=false;
 	string n, y, m;
 	cout << "Имя: ";
 	cin >> n;
 	cout << "Фамилия: ";
 	cin >> m;
-	cout << "Дата рождения: ";
-	cin >> y;
+	do {
+		cout << "Дата рождения: ";
+		cin >> y;
+		check = c.CheckDate(y);
+	} while (check == false);
 
 	Passenger dop(n, m, y);
 	Passenger *mas = new Passenger[pasCol + 1];
@@ -129,3 +135,4 @@ void Voyage::SavePas(string file)
 	}
 		f.close();
 }
+

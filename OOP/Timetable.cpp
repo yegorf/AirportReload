@@ -1,6 +1,7 @@
 #include "Timetable.h"
 #include <fstream>
 #include "conio.h"
+#include "Checker.h"
 
 Timetable::Timetable()
 {
@@ -88,11 +89,19 @@ void Timetable::FileTimetable(string f)
 
 string Timetable::AddVoyage()
 {
+	Checker C;
+	bool check;
 	Voyage dop;
 	string time, city, country, air;
 	string num;
-	cout << "Введите время";cin>>time;
-	cout << "Введите номер рейса: ";cin >> num;
+	do {
+		cout << "Введите время"; cin >> time;
+		check = C.CheckTime(time);
+	} while (check == false);
+	do {
+		cout << "Введите номер рейса: "; cin >> num;
+		check = C.CheckNum(num);
+	} while (check == false);
 	cout << "Введите код аэропорта: ";cin >> air;
 	cout << "Введите город: ";cin >> city;
 	cout << "Введите страну: "; cin >> country;
@@ -169,6 +178,7 @@ void Timetable::AddPas(int n)
 void Timetable::DeletePas(int num,int n)
 {
 	voy[num].DeletePas(n);
+
 }
 
 void Timetable::SavePas(int n,string file)
